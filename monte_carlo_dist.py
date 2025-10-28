@@ -6,7 +6,7 @@ import math
 import sys
 import os
 
-script_dir = os.path.dirname(__file__)  # 스크립트가 있는 폴더
+script_dir = os.path.dirname(__file__)
 file_path = os.path.join(script_dir, 'dealdata.txt')
 
 @dataclass
@@ -28,23 +28,23 @@ def main():
     font_prop = fm.FontProperties(fname=font_path).get_name()
     plt.rc('font', family=font_prop)
 
-    num_data = int(input("데이터 수: "))
-    target = int(input("목표 딜량: "))
-    interval = int(input("히스토그램 구간 단위: "))
+    num_data = int(input("Data number: "))
+    target = int(input("Target damage: "))
+    interval = int(input("Histogram interval: "))
 
     while(True):
-        crit_rate = float(input("크리 확률(%): "))
+        crit_rate = float(input("Critical rate(%)(put negative number to stop): "))
         if(crit_rate < 0):
             break
-        crit_mult = float(input("크리 배율(%): "))
-        stab = float(input("안정치(%): "))
-        max_deal = int(input("최대 데미지: "))
-        repeat = int(input("타수: "))
+        crit_mult = float(input("Critical multiplier(%): "))
+        stab = float(input("Stability(%): "))
+        max_deal = int(input("Non-crit max damage: "))
+        repeat = int(input("Number of attacks: "))
         deal_tl.append(Attack(crit_rate / 100, crit_mult / 100, max_deal, stab / 100, repeat))
     
-    print("데이터 수집 완료")
+    print("Data collection finished")
 
-    for _ in range(num_data):
+    for j in range(num_data):
         total_deal = 0
         for i in range(len(deal_tl)):
             total_deal += crit_simul(deal_tl[i])
@@ -52,7 +52,7 @@ def main():
             cnt += 1
         data_list.append(total_deal)
     
-    print("시뮬레이션 완료")
+    print("Simulation done")
 
     for i in range(len(deal_tl)):
         avg_sum += avg_deal(deal_tl[i])
@@ -70,7 +70,7 @@ def main():
     
     xmin, xmax = plt.xlim()
     ymin, ymax = plt.ylim()
-    plt.xlabel(f"성공 확률: {cnt / num_data * 100:.2f} %, 평균 딜: {avg_sum}")
+    plt.xlabel(f"Success rate: {cnt / num_data * 100:.2f} %, Average damage: {avg_sum}")
     plt.axvline(x=target, color='black', linewidth=1)
     plt.show()
 
