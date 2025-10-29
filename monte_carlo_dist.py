@@ -60,6 +60,8 @@ def main():
     end = (2 * max_hp * (start_hp - avg_sum) + (-hp_prop) * avg_sum * start_hp * (hp_mult - 1)) / (2 * max_hp + hp_prop * avg_sum * (hp_mult - 1))
     fin_mult = abs(hp_prop) * (((1.0 - hp_prop) + (-1) ** ((hp_prop) * (hp_prop - 1) / 2) * (start_hp + end) / max_hp) / 2) * (hp_mult - 1) + 1
 
+    avg_sum *= fin_mult
+
     for j in range(num_data):
         total_deal = 0
         for i in range(len(deal_tl)):
