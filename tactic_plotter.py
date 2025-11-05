@@ -46,7 +46,7 @@ def main():
     supporter_tl = {}
     with open(timeline, 'r', encoding='utf-8') as f:
         text = f.read()
-        pattern = r'\(?(\d{2}:\d{2}\.\d{3})\)?\s*C?([^\s>]+)(?:>([^\s]+))?'
+        pattern = r'\(?(\d{2}:\d{2}\.\d{3})\)?\s*C?([^\s>]+(?:\s*\d타)?)(?:>([^\s]+))?'
         matches = re.findall(pattern, text)
         for time, char, target in matches:
             if (char in attacker):
@@ -60,6 +60,7 @@ def main():
     idx = 0
     tl = [[] for _ in range(len(attacker_tl) + len(supporter_tl))]
     init_time = 0
+    fin_time = 600
 
     font_path = "C:/Windows/Fonts/malgun.ttf"
     font_prop = fm.FontProperties(fname=font_path).get_name()
@@ -81,6 +82,10 @@ def main():
         if (max_time > init_time):
             init_time = max_time
 
+        min_time = min(tl[idx])
+        if (min_time < fin_time):
+            fin_time = min_time
+
         plt.plot(tl[idx], [idx / 10 for _ in range(len(tl[idx]))], marker='v', color=colors[idx], markersize=5, linewidth=1.5)
 
         for delay in delays:
@@ -91,6 +96,9 @@ def main():
         idx += 1
 
     supporter_UE2 = {}
+    for char in supporter:
+        if not supporter[char]['UE2']:
+            supporter_UE2[char] = False
 
     for (key, times) in supporter_tl.items():
         (char, target) = key
@@ -99,10 +107,10 @@ def main():
             name += f">{target}"
         char_names.append(name)
 
-        while (not supporter_UE2.get(char)):
+        while (supporter_UE2.get(char) == None):
             answer = input(f"UE rank 2 (전무 2성) required for {char}? [y/n] ")
             if answer in ['y', 'n', 'Y', 'N']:
-                supporter_UE2[char] = answer.lower()
+                supporter_UE2[char] = True if answer.lower() == 'y' else False
             else:
                 print("\033[F\033[K\033[F")
 
@@ -118,6 +126,10 @@ def main():
         if (max_time > init_time):
             init_time = max_time
 
+        min_time = min(tl[idx])
+        if (min_time < fin_time):
+            fin_time = min_time
+
         plt.plot(tl[idx], [idx / 10 for _ in range(len(tl[idx]))], marker='v', color=colors[idx], markersize=5, linewidth=1.5)
         
         delay_shifted = [x - delay for x in tl[idx]]
@@ -131,12 +143,14 @@ def main():
             ax.add_patch(rect)
         idx += 1
 
-    plt.gca().invert_xaxis()
-    plt.gca().xaxis.set_major_formatter(FuncFormatter(time_formatter))
-    plt.xticks([x * 30 for x in range(math.ceil(init_time / 30.0) + 1)], rotation=-90)
+    x_ticks = [x * 10 for x in range(math.floor(fin_time / 10.0), math.ceil(init_time / 10.0) + 1)]
+    plt.xticks(x_ticks, rotation=-90)
     plt.yticks([x / 10 for x in range(len(char_names))], char_names)
     plt.subplots_adjust(bottom=0.2)
+    plt.xlim(min(x_ticks), max(x_ticks))
     plt.ylim(0, 1)
+    plt.gca().invert_xaxis()
+    plt.gca().xaxis.set_major_formatter(FuncFormatter(time_formatter))
 
     for i, name in enumerate(char_names):
         plt.plot([], [], color=colors[i], label=name)

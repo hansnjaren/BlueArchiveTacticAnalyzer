@@ -1,28 +1,28 @@
-# Blue Archive Tactic Analyzer (BATA)
-BATA has 2 components right now: (1) Tactic timeline plotter and (2) Damage calculator
+# 블루 아카이브 택틱 분석기 (Blue Archive Tactic Analyzer, BATA)
+BATA에는 현재 2개의 기능이 있습니다: (1) 택틱 타임라인 시각화 도구, (2) 데미지 계산기
 
-## Tactic timeline plotter
-This will plot the attacker's attacking time and buffs duration based on timeline. If the character data is NOT in database JSON file, it does not work properly. If you have any data that are not in database, feel free to make PR. 
+## 택틱 타임라인 시각화 도구
+이 기능은 `timeline.txt`에 입력한 택틱 타임라인을 시각화해줍니다. 만약 캐릭터 데이터가 `database` 디렉터리에 있는 JSON 파일에 입력되어있지 않다면 그 캐릭터는 생략될 것입니다. 만약 데이터베이스에 없는 캐릭터의 데이터가 있다면 자유롭게 PR해주시면 감사하겠습니다. 
 
-All buff/debuff durations of supporters are written in basic duration. So you must answer if the supporters are higher than unique equipment (UE) rank 2, and their buff/debuff duration changes when they reach UE rank 2. For convenience, it assumes that passive skill (PS) level is 10 (MAX) if UE rank 2 is required. 
+데이터베이스의 모든 버프/디버프 지속 시간은 전무 1성 이하 기준으로 작성되어 있습니다. 그래서 만약 전무 2성 이상 육성 시 지속 시간이 늘어나는 서포터가 타임라인에 있는 경우 전무 2성 이상 여부를 답해야 합니다. 편의를 위해서 전무 2성 이상인 경우 강화 스킬(2스) 레벨이 10(MAX)라고 가정합니다. 
 
-This feature has combined the legacy plotter (whith works with data that users should give delays and times for input) and tactic parser. Both are in `deprecated` directory. 
+이 기능은 기존의 시각화 도구(유저가 직접 딜레이와 스킬 사용 시간을 구분하여 입력해야 하는 도구)와 택틱 파서(기존의 시각화 도구 입력값 생성에 도움을 주는 도구)의 기능을 합쳐서 만들어졌습니다. 이 두 도구 모두 `deprecated` 디렉터리에서 보존하고 있습니다. 
 
-To use it properly, you should write your timeline in this format:
+도구의 정상적인 작동을 위해서는 다음과 같은 형식으로 타임라인을 작성해야 합니다:
 
-> time character > target
+`mm:ss.000 캐릭터 > 대상`
 
-Additional description in front of or back of the format does not care, but there should be no additional text inside the format, except closing parenthesis `)`. 
+이 형식 앞뒤의 부가 설명은 상관 없으나 이 형식 중간에는 시간과 캐릭터 사이의 닫는 괄호`)`를 제외하면 그 어떠한 부가적인 문구도 작성되면 안 됩니다. (`)`: 택틱을 `코스트 (mm:ss.000) 캐릭터 > 대상` 형태로 적는 경우를 위해 허용)
 
-This is the example of proper timeline format: 
+다음은 올바르게 작성된 타임라인 예시입니다:
 
 ``` 
-페이즈 전환 직후 (01:31.966) 돌마리 - 9코 (영상 8.6코 01:30.866) 돌쿠라코 - (01:29.966) 사츠키 `8/12` `6640만`
-7코 (영상 9.9코 01:20.633) 수로코>게부라 - (01:19.466) 돌마리 `과부하 OFF 후 ON`
+5.7코 (03:18.700) C드히나 ON - (03:16.867) 드히나 1타>성배 - (03:14.367) 드히나 2타 - 5.2코 (03:11.067) 돌마리>성배 - (03:10.933) 드히나 3타 `2040만` - 6코 (03:06.400) 드아루 - 5.9코 (03:03.267) 리오
 ```
 
-## Damage calculator
-This will calculate average damage that will be dealt by dealer, and calculate success rate (dealing more than target) with Monte Carlo method. 
-You should know critical rate, critical multiplier, stability, non-crit max damage, and number of attack of attackers. 
+추가적으로 드히나의 경우 ON, 1타, 2타, 3타를 뒤에 붙여줘야 정상적으로 작동합니다. 
 
-It is also possible to calculate average damage for attackers that has damage multiplier proportional to enemy's HP (either remaining HP or damage taken), but it may not be accurate since it is approximated to average damage. 
+## 데미지 계산기
+이 기능은 `dealdata.txt`에 입력한 값을 기준으로 딜러의 평균 데미지와 택틱 성공률(목표 딜량보다 더 많은 데미지를 넣을 확률)을 몬테 카를로 기법을 이용하여 계산합니다. 이를 위해서는 크리티컬 확률, 크리티컬 데미지 배율, 안정치, 공격의 일반 최대 데미지(크리티컬 X, 안정치 100%), 그리고 그 공격의 횟수를 입력해야 합니다. 
+
+또한 남은 체력/깎인 체력 비례 딜러들의 딜량 또한 추정이 가능합니다. 이를 위해서 남은 체력(1)/깎인 체력(-1) 비례 여부, 비례 배율, 보스 최대 체력, 그리고 시작 체력을 입력해야 합니다. 다만 평균 데미지를 기준으로 평균 배율을 계산하여 모든 공격이 해당 배율로 적용된다고 근사하였기 때문에 정확하지 않을 수 있습니다. 

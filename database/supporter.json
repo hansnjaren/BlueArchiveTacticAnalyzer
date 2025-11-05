@@ -16,5 +16,29 @@
         "delay": 1.7,
         "duration": 19,
         "UE2": true
+    },
+    {
+        "name": "키사키",
+        "delay": 1.7,
+        "duration": 15,
+        "UE2": true
+    },
+    {
+        "name": "드아루",
+        "delay": 1.4,
+        "duration": 30,
+        "UE2": false
+    },
+    {
+        "name": "리오",
+        "delay": 3.9,
+        "duration": 20,
+        "UE2": true
+    },
+    {
+        "name": "수시노",
+        "delay": 0.8,
+        "duration": 50,
+        "UE2": false
     }
 ]
