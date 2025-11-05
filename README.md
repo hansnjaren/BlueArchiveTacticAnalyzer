@@ -4,6 +4,8 @@ BATA has 2 components right now: (1) Tactic timeline plotter and (2) Damage calc
 ## Tactic timeline plotter
 This will plot the attacker's attacking time and buffs duration based on timeline. If the character data is NOT in database JSON file, it does not work properly. If you have any data that are not in database, feel free to make PR. 
 
+All buff/debuff durations of supporters are written in basic duration. So you must answer if the supporters are higher than unique equipment (UE) rank 2, and their buff/debuff duration changes when they reach UE rank 2. For convenience, it assumes that passive skill (PS) level is 10 (MAX) if UE rank 2 is required. 
+
 This feature has combined the legacy plotter (whith works with data that users should give delays and times for input) and tactic parser. Both are in `deprecated` directory. 
 
 To use it properly, you should write your timeline in this format:

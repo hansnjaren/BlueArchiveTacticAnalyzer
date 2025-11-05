@@ -90,6 +90,8 @@ def main():
                 plt.axvline(x=t, color=colors[idx], linewidth=1, alpha=0.5)
         idx += 1
 
+    supporter_UE2 = {}
+
     for (key, times) in supporter_tl.items():
         (char, target) = key
         name = char
@@ -97,8 +99,17 @@ def main():
             name += f">{target}"
         char_names.append(name)
 
+        while (not supporter_UE2.get(char)):
+            answer = input(f"UE rank 2 (전무 2성) required for {char}? [y/n] ")
+            if answer in ['y', 'n', 'Y', 'N']:
+                supporter_UE2[char] = answer.lower()
+            else:
+                print("\033[F\033[K\033[F")
+
         delay = supporter[char]['delay']
         buff_time = supporter[char]['duration']
+        if (supporter_UE2[char]):
+            buff_time *= 1.19
 
         for time_text in times:
             tl[idx].append(time_parser(time_text))
