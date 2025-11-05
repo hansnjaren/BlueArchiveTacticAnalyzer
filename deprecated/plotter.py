@@ -10,15 +10,14 @@ file_path = os.path.join(script_dir, 'tldata.txt')
 
 colors = ['#000000', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff']
 
-
 def main():
     sys.stdin = open(file_path, 'r', encoding='utf-8')
 
-    dealer = int(input("Number of attackers: "))
+    attacker = int(input("Number of attackers: "))
     supporter = int(input("Number of supporters: "))
 
     idx = 0
-    tl = [[] for _ in range(dealer + supporter)]
+    tl = [[] for _ in range(attacker + supporter)]
     char_names = []
 
     font_path = "C:/Windows/Fonts/malgun.ttf"
@@ -26,7 +25,7 @@ def main():
     plt.rc('font', family=font_prop)
     fig, ax = plt.subplots()
 
-    for i in range(dealer):
+    for i in range(attacker):
         name = input(f"Attacker {i+1} Name: ")
         char_names.append(name)
         delays = []

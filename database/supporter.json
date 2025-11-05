@@ -1,0 +1,17 @@
+[
+    {
+        "name": "수로코", 
+        "delay": 1.7,
+        "duration": 30
+    },
+    {
+        "name": "돌쿠라코",
+        "delay": 0.5,
+        "duration": 17
+    },
+    {
+        "name": "교스나",
+        "delay": 1.7,
+        "duration": 19
+    }
+]
