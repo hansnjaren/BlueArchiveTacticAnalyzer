@@ -46,7 +46,7 @@ def main():
     supporter_tl = {}
     with open(timeline, 'r', encoding='utf-8') as f:
         text = f.read()
-        pattern = r'\(?(\d{2}:\d{2}\.\d{3})\)?\s*([^\s>]+)(?:>([^\s]+))?'
+        pattern = r'\(?(\d{2}:\d{2}\.\d{3})\)?\s*C?([^\s>]+)(?:>([^\s]+))?'
         matches = re.findall(pattern, text)
         for time, char, target in matches:
             if (char in attacker):
