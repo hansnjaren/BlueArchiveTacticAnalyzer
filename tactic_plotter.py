@@ -13,7 +13,7 @@ enemy_database = 'database/enemy.json'
 script_dir = os.path.dirname(os.path.abspath(__file__))
 timeline = os.path.join(script_dir, 'timeline.txt')
 
-colors = ['#000000', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff']
+colors = ['#000000', '#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00']
 
 with open(attacker_database, 'r', encoding='utf-8') as attacker_json:
     attacker_load = json.load(attacker_json)
@@ -46,7 +46,7 @@ def main():
     supporter_tl = {}
     with open(timeline, 'r', encoding='utf-8') as f:
         text = f.read()
-        pattern = r'\(?(\d{2}:\d{2}\.\d{3})\)?\s*C?([^\s>]+(?:\s*\d타)?)(?:>([^\s]+))?'
+        pattern = r'\(?(\d{2}:\d{2}\.\d{3})\)?\s*C?([^\s>]+(?:\s*(?:ON|\d타|\d스))?)(?:>([^\s]+))?'
         matches = re.findall(pattern, text)
         for time, char, target in matches:
             if (char in attacker):
@@ -82,7 +82,7 @@ def main():
         if (max_time > init_time):
             init_time = max_time
 
-        min_time = min(tl[idx])
+        min_time = min(tl[idx]) - delays[-1]
         if (min_time < fin_time):
             fin_time = min_time
 
@@ -118,7 +118,6 @@ def main():
         buff_time = supporter[char]['duration']
         if (supporter_UE2[char]):
             buff_time *= 1.19
-
         for time_text in times:
             tl[idx].append(time_parser(time_text))
 

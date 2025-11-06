@@ -25,31 +25,33 @@ def main():
     avg_sum = 0
     hp_prop = 0
 
+    mute = True
+
     font_path = "C:/Windows/Fonts/malgun.ttf"
     font_prop = fm.FontProperties(fname=font_path).get_name()
     plt.rc('font', family=font_prop)
 
-    num_data = int(input("Data number: "))
-    target = int(input("Target damage: "))
-    interval = int(input("Histogram interval: "))
+    num_data = int(input("" if mute else "Data number: "))
+    target = int(input("" if mute else "Target damage: "))
+    interval = int(input("" if mute else "Histogram interval: "))
     while(True):
-        hp_prop = int(input("HP proportional(-1: reverse, 0: none, 1: forward): "))
+        hp_prop = int(input("" if mute else "HP proportional(-1: reverse, 0: none, 1: forward): "))
         if(abs(hp_prop) > 1):
             print("wrong input.")
         else:
             break
-    hp_mult = float(input("HP proportional multiplier: "))
-    max_hp = int(input("Max HP of boss: "))
-    start_hp = int(input("Start point: "))
+    hp_mult = float(input("" if mute else "HP proportional multiplier: "))
+    max_hp = int(input("" if mute else "Max HP of boss: "))
+    start_hp = int(input("" if mute else "Start point: "))
 
     while(True):
-        crit_rate = float(input("Critical rate(%)(put negative number to stop): "))
+        crit_rate = float(input("" if mute else "Critical rate(%)(put negative number to stop): "))
         if(crit_rate < 0):
             break
-        crit_mult = float(input("Critical multiplier(%): "))
-        stab = float(input("Stability(%): "))
-        max_deal = int(input("Non-crit max damage: "))
-        repeat = int(input("Number of attacks: "))
+        crit_mult = float(input("" if mute else "Critical multiplier(%): "))
+        stab = float(input("" if mute else "Stability(%): "))
+        max_deal = int(input("" if mute else "Non-crit max damage: "))
+        repeat = int(input("" if mute else "Number of attacks: "))
         deal_tl.append(Attack(crit_rate / 100, crit_mult / 100, max_deal, stab / 100, repeat))
     
     print("Data collection finished")
@@ -61,6 +63,7 @@ def main():
     fin_mult = abs(hp_prop) * (((1.0 - hp_prop) + (-1) ** ((hp_prop) * (hp_prop - 1) / 2) * (start_hp + end) / max_hp) / 2) * (hp_mult - 1) + 1
 
     avg_sum *= fin_mult
+    avg_sum = round(avg_sum)
 
     for j in range(num_data):
         total_deal = 0

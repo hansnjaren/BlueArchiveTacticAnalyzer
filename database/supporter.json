@@ -36,9 +36,33 @@
         "UE2": true
     },
     {
+        "name": "리오 1스",
+        "delay": 1.0,
+        "duration": 19,
+        "UE2": true
+    },
+    {
         "name": "수시노",
         "delay": 0.8,
         "duration": 50,
         "UE2": false
+    },
+    {
+        "name": "히카리",
+        "delay": 3.3,
+        "duration": 32,
+        "UE2": false
+    }, 
+    {
+        "name": "수우이",
+        "delay": 1.8,
+        "duration": 45,
+        "UE2": false 
+    }, 
+    {
+        "name": "수칸나",
+        "delay": 0.9,
+        "duration": 20,
+        "UE2": true
     }
 ]
